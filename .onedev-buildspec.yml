@@ -25,3 +25,19 @@ jobs:
   maxRetries: 3
   retryDelay: 30
   timeout: 3600
+- name: test
+  jobExecutor: docker
+  steps:
+  - !CommandStep
+    name: test
+    runInContainer: true
+    image: qiniu_ubuntu
+    interpreter: !DefaultInterpreter
+      commands:
+      - qshell user ls
+    useTTY: true
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
