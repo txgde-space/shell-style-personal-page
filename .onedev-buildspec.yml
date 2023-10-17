@@ -33,7 +33,8 @@ jobs:
     name: qiniu_docker
     image: qiniu_ubuntu
     volumeMounts:
-    - targetPath: /home
+    - sourcePath: /
+      targetPath: /home
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
