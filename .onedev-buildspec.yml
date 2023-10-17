@@ -25,7 +25,7 @@ jobs:
       commands:
       - pwd
       - qshell account jCqlDDtKrsCSck-4s5BEd6vQHtSCiF15G6lMTk3i mF2Kbj5zT8CuOP69gs2lhu-oJtJ-ATxbL8KOYCPU qiniu
-      - qshell qupload2 --bucket aboutme-txg --src-dir=./ --skip-file-prefixes=.gitignore --skip-path-prefixes=.git  --overwrite
+      - qshell qupload2 --bucket aboutme-txg --src-dir=./ --skip-file-prefixes=.gitignore,.onedev-buildspec.yml --skip-path-prefixes=.git  --overwrite
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
