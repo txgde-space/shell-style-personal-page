@@ -28,6 +28,10 @@ jobs:
       - qshell qupload2 --bucket aboutme-txg --src-dir=./ --skip-file-prefixes=.gitignore,.onedev-buildspec.yml --skip-path-prefixes=.git  --overwrite
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger
+    branches: master
+    projects: shell-style-personal-page
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
