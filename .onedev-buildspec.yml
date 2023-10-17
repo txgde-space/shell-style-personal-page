@@ -45,6 +45,15 @@ jobs:
       - ls /home
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: test
+    runInContainer: true
+    image: qiniu_ubuntu
+    interpreter: !DefaultInterpreter
+      commands:
+      - ls /
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
