@@ -35,8 +35,7 @@ jobs:
     image: qiniu_ubuntu
     interpreter: !DefaultInterpreter
       commands:
-      - qshell user ls >> log.txt
-      - cat log.txt
+      - ls @project_path@
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
