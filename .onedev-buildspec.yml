@@ -34,7 +34,7 @@ jobs:
     image: qiniu_ubuntu
     interpreter: !DefaultInterpreter
       commands:
-      - qshell user ls
+      - ls /
     useTTY: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
