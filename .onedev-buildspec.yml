@@ -39,7 +39,7 @@ jobs:
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
     name: test
-    runInContainer: true
+    runInContainer: false
     image: qiniu_ubuntu
     interpreter: !DefaultInterpreter
       commands:
