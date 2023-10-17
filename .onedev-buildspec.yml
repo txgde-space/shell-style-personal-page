@@ -1,0 +1,27 @@
+version: 25
+jobs:
+- name: qiniu
+  jobExecutor: docker
+  steps:
+  - !CommandStep
+    name: 创建账号
+    runInContainer: true
+    image: qiniu_ubuntu
+    interpreter: !DefaultInterpreter
+      commands:
+      - qshell account jCqlDDtKrsCSck-4s5BEd6vQHtSCiF15G6lMTk3i mF2Kbj5zT8CuOP69gs2lhu-oJtJ-ATxbL8KOYCPU qiniu
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: 查看是否成功
+    runInContainer: true
+    image: qiniu_ubuntu
+    interpreter: !DefaultInterpreter
+      commands:
+      - qshell user list
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
