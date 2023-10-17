@@ -43,7 +43,7 @@ jobs:
     image: qiniu_ubuntu
     interpreter: !DefaultInterpreter
       commands:
-      - ls shell-style-personal-page
+      - ls -hl shell-style-personal-page
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
