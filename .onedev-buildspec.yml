@@ -3,6 +3,12 @@ jobs:
 - name: qiniu
   jobExecutor: docker
   steps:
+  - !CheckoutStep
+    name: check
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !RunContainerStep
     name: 创建容器
     image: qiniu_ubuntu
