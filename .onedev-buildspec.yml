@@ -29,11 +29,17 @@ jobs:
 - name: test
   jobExecutor: docker
   steps:
+  - !CheckoutStep
+    name: check
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !RunContainerStep
     name: qiniu_docker
     image: qiniu_ubuntu
     volumeMounts:
-    - sourcePath: /data/@project_name@/data
+    - sourcePath: '@project_name@'
       targetPath: /home
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
