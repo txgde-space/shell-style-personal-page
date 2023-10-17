@@ -33,7 +33,7 @@ jobs:
     name: qiniu_docker
     image: qiniu_ubuntu
     volumeMounts:
-    - sourcePath: '@project_path@'
+    - sourcePath: /
       targetPath: /home
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
