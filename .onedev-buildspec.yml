@@ -29,13 +29,20 @@ jobs:
 - name: test
   jobExecutor: docker
   steps:
+  - !RunContainerStep
+    name: qiniu_docker
+    image: qiniu_docker
+    volumeMounts:
+    - targetPath: /home
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
     name: test
     runInContainer: true
     image: qiniu_ubuntu
     interpreter: !DefaultInterpreter
       commands:
-      - ls @project_path@
+      - ls /home
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
