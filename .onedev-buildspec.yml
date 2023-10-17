@@ -43,8 +43,7 @@ jobs:
     image: qiniu_ubuntu
     interpreter: !DefaultInterpreter
       commands:
-      - ls @project_path@
-      - echo @project_name@
+      - ls ./
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
