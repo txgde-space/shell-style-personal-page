@@ -9,16 +9,6 @@ jobs:
     withLfs: false
     withSubmodules: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !CommandStep
-    name: test
-    runInContainer: true
-    image: qiniu_ubuntu
-    interpreter: !DefaultInterpreter
-      commands:
-      - ls /home
-      - ls ./
-    useTTY: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !RunContainerStep
     name: 创建容器
     image: qiniu_ubuntu
@@ -33,8 +23,9 @@ jobs:
     image: qiniu_ubuntu
     interpreter: !DefaultInterpreter
       commands:
+      - pwd
       - qshell account jCqlDDtKrsCSck-4s5BEd6vQHtSCiF15G6lMTk3i mF2Kbj5zT8CuOP69gs2lhu-oJtJ-ATxbL8KOYCPU qiniu
-      - qshell qupload2 --bucket aboutme-txg --src-dir=/home
+      - qshell qupload2 --bucket aboutme-txg --src-dir=./
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
