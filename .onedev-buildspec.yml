@@ -39,11 +39,12 @@ jobs:
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
     name: test
-    runInContainer: false
+    runInContainer: true
     image: qiniu_ubuntu
     interpreter: !DefaultInterpreter
       commands:
-      - ls /home
+      - ls @project_path@
+      - echo @project_name@
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
