@@ -3,6 +3,14 @@ jobs:
 - name: qiniu
   jobExecutor: docker
   steps:
+  - !RunContainerStep
+    name: 创建容器
+    image: qiniu_ubuntu
+    volumeMounts:
+    - sourcePath: '@project_path@'
+      targetPath: /home
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
     name: 创建账号
     runInContainer: true
@@ -20,6 +28,15 @@ jobs:
       commands:
       - qshell user ls >> log.txt
       - cat log.txt
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: 同步对象存储
+    runInContainer: true
+    image: qiniu_ubuntu
+    interpreter: !DefaultInterpreter
+      commands:
+      - qshell qupload2 --bucket aboutme-txg --src-dir=/home
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
