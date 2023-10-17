@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.0/css/all.css" rel="stylesheet">
+    <title>About Me——童旭光</title>
+</head>
+<style>
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: white;
+}
+
+#command{
+    border: 0;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: #757aec;
+    caret: #0a58ca;
+    caret-color: #757aec;
+    position: absolute;
+    width: 500px;
+}
+.command{
+    color: #757aec;
+}
+.main{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+.nav{
+    background: #2f3131;
+    height: 50px;
+    padding: 0 0 0 10px;
+    margin: 0;
+    display: block;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.dot{
+    display: inline-block;
+    justify-content: center;
+    width: 30%;
+
+}
+.motd{
+    display: inline-block;
+    text-align: center;
+    width: 40%;
+}
+i{
+    margin: 3px;
+}
+pre{
+    margin: 0;
+}
+.content{
+    position: absolute;
+    margin: 0;
+    width: 100%;
+    top: 50px;
+    bottom: 0;
+    color: white;
+    background: url(./background.jpeg) rgba(0, 0, 0, .86) no-repeat center;
+    background-blend-mode: multiply;
+    background-size: cover;
+    overflow: auto;
+    font-family: "DejaVu Math TeX Gyre", sans-serif;
+}::-webkit-scrollbar{display: none;}
+
+
+a {
+    text-decoration: none;
+    color: white;
+}
+a:hover{
+    color: white;
+    text-decoration: underline;
+}
+#fullscreen{
+    color: green;
+}
+#fullscreen:hover{
+    text-shadow:  1px 1px 1px grey;
+}
+</style>
+<body>
+    <div class="main">
+        <div class="align-content-center nav">
+            <span class="dot">
+                <i class="fa fa-lg fa-circle" aria-hidden="true" style="color: red"></i>
+                <i class="fa fa-lg fa-circle" aria-hidden="true" style="color: yellow"></i>
+                <i class="fa fa-lg fa-circle" id="fullscreen" aria-hidden="true" onclick="fullScreen()"></i>
+            </span>
+            <span class="motd">
+                <p id="motd" style="color: white;display: inline-block;">root@About-Me:~(nbsh)</p>
+            </span>
+        </div>
+        <div class="row align-content-start content">
+            <div class="text">
+                <pre >
+
+  ______   __                              __            __       __
+ /      \ |  \                            |  \          |  \     /  \
+|  $$$$$$\| $$____    ______   __    __  _| $$_         | $$\   /  $$  ______
+| $$__| $$| $$    \  /      \ |  \  |  \|   $$ \        | $$$\ /  $$$ /      \
+| $$    $$| $$$$$$$\|  $$$$$$\| $$  | $$ \$$$$$$        | $$$$\  $$$$|  $$$$$$\
+| $$$$$$$$| $$  | $$| $$  | $$| $$  | $$  | $$ __       | $$\$$ $$ $$| $$    $$
+| $$  | $$| $$__/ $$| $$__/ $$| $$__/ $$  | $$|  \      | $$ \$$$| $$| $$$$$$$$
+| $$  | $$| $$    $$ \$$    $$ \$$    $$   \$$  $$      | $$  \$ | $$ \$$     \
+ \$$   \$$ \$$$$$$$   \$$$$$$   \$$$$$$     \$$$$        \$$      \$$  \$$$$$$$
+
+            *<i class="fa fa-user"></i>姓名 --> 童旭光
+            *<i class="fa fa-envelope"></i>邮箱 --> <a href="mailto:tongxuguang23@163.com">tongxuguang23@163.com</a>
+            *<i class="fa-brands fa-github"></i>Github --> 没东西，不发了
+            *<i class="fa fa-rss"></i>Blog --> <a target="_blank" href="http://blog.01Rookie.com">http://blog.01Rookie.com(别看了，没咋更)</a>
+            *<i class="fa-brands fa-qq"></i></i>QQ --> 2598512518
+
+About-Me Powered by <span style="color: blueviolet">Tong Xuguang</span>
+Login: <span id="time">Wed Sep 07 2022 00:00:00 GMT+0800 (中国标准时间)</span> from <span id="ip"></span>
+------------------------->输入<span style="color: red">help</span>获取命令列表<----------------------------------
+            </pre>
+                <div id="history"></div>
+                <div>
+                    <label>root@about-me:~#</label>
+                    <input id="command" oninput="updateCommand()" >
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+
+<script type="text/javascript">
+    const pre="root@about-me:~#"; //用户
+    const time = new Date(); //时间
+    let fullscreen = false;//判断是否全屏
+    const ip = returnCitySN['cip']; //获取ip
+    let command_list=[]; //命令列表，记录输入过的命令，实现按上箭头浏览命令
+    let command_cnt=0; //记录所输入的命令数
+    let command_pointer=0; //命令指针，指向当前所浏览的指令
+    const motd=[
+        "向上向下键可以浏览历史命令呢",
+        "不知道ls能不能输呢(⊙_⊙)？",
+        "没啥看的，赶紧关了吧ヾ(•ω•`)o",
+        "为什么婉儿打团一进场就暴毙了呢＞﹏＜",
+        "啊啊啊，3.2的草神不能歪！（＞人＜；）",
+        "左上角的小绿点没准是可以点的哟§(*￣▽￣*)§"
+    ]
+    document.getElementById('time').innerHTML=time;
+    document.getElementById('ip').innerHTML=ip;
+
+    var updateMotd = function (){
+        var motd_id = Math.floor((Math.random()*10)%6);
+        document.getElementById('motd').innerText=motd[motd_id]
+    }
+
+    var motd_int = setInterval(updateMotd,10000)
+
+    function resultOut(command,text){ //输出命令执行的结果
+        document.getElementById('history').innerHTML+=pre+' '+'<span class="command">'+command+"</span><br>";
+        document.getElementById('history').innerHTML+=text+"<br>";
+    }
+
+    function updateCommand(){ //实时更新当前的命令到command_list中去
+        // console.log(command_list)
+        command_list[command_cnt]=document.getElementById('command').value;
+        if(command_list[command_cnt].length>30)
+            document.getElementById('motd').innerText="别输了，再输就玩坏了╰（‵□′）╯";
+    }
+
+    function changeCommand(id){//将command_list中的指定id的命令填入命令框中
+        if(!command_list[id]) document.getElementById('command').value='';
+        else document.getElementById('command').value=command_list[id];
+    }
+
+    function fullScreen() { //控制全屏，本段来源于网络
+        if(fullscreen){
+                fullscreen=false;
+                let screen = document.cancelFullScreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || document.exitFullScreen
+                let wscript = null
+
+                if (typeof screen != "undefined" && screen) {
+                    screen.call(document);
+                    return;
+                }
+
+                if (typeof window.ActiveXObject != "undefined") {
+                    wscript = new ActiveXObject("WScript.Shell");
+                    if (wscript != null) {
+                        wscript.SendKeys("{F11}");
+                    }
+                }
+        }
+        else{
+            fullscreen=true;
+            let el = document.documentElement
+            let screen = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen
+            let wscript = null
+            if (typeof screen != "undefined" && screen) {
+                screen.call(el);
+                return;
+            }
+            if (typeof window.ActiveXObject != "undefined") {
+                wscript = new ActiveXObject("WScript.Shell");
+                if (wscript) {
+                    wscript.SendKeys("{F11}");
+                }
+            }
+        }
+    }
+
+
+    document.getElementById('command').focus();
+    document.getElementById('command').addEventListener('keydown',function (e){
+        // console.log(e.key)
+        if(e.key==='Enter'){
+            let command = document.getElementById('command').value; //取得输入的命令
+            document.getElementById('command').value=""; //输入完命令，清空输入框
+            if(command!=''){
+                command_list.pop(); //将列表最后的一个位置的命令缓冲区弹出
+                command_list.push(command) //将输入的命令存入
+                command_cnt++; //命令总数加1
+                command_list[command_cnt]='' //新建一个命令缓冲区，为空
+                command_pointer=command_cnt; //命令指针指向当前最新的命令
+                // console.log(command_list,command_cnt);
+            }
+            if(command==='') resultOut(command,'');
+            else if(command==='help') resultOut(command,"whoami -----自我介绍<br>hobby -----我的爱好<br>dream -----我的\"小\"目标<br>Maybe 可能 似乎还有其他的命令");
+            else if(command==='hobby') resultOut(command,"最喜欢做的事情————编写一些程序、折腾一些小玩意儿<br>正在学的东西————目前正在学习画卡通画、PCB板的设计制作焊接");
+            else if(command==='dream') resultOut(command,"1、想成为想稚晖君那样的dalao，软件硬件都能搞一些<br>2、能够做到想画什么东西都能画出来<br>3、婉儿打团不要暴毙!!!<br>4、3.2的草神不要歪，谢谢(╬▔皿▔)╯<br>5、大学能毕业(∪.∪ )...zzz");
+            else if(command==='whoami') resultOut(command,"我叫童旭光，我来自河南郑州，啊啊啊啊啊啊啊，我是社恐(o゜▽゜)o☆...................完")
+            else if(command==='ls') resultOut(command,"你在想什么ヾ(≧へ≦)〃")
+            else resultOut(command,"-nbsh: "+command+": 未找到命令. 输入help来获取命令列表");
+        }
+        else if(e.key==='ArrowUp'){
+            if(command_pointer>0&&command_cnt>0) {//若未到最前面的一个命令，且输入过命令
+                command_pointer--;
+                changeCommand(command_pointer);
+            }
+        }
+        else if(e.key==='ArrowDown'){
+            if(command_pointer<command_cnt) {//当前的命令指针未到最后一个命令
+                command_pointer++;
+                changeCommand(command_pointer);
+            }
+        }
+        document.getElementById('command').scrollIntoView()
+    })
+</script>
+</html>
