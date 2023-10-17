@@ -18,24 +18,6 @@ jobs:
     interpreter: !DefaultInterpreter
       commands:
       - qshell account jCqlDDtKrsCSck-4s5BEd6vQHtSCiF15G6lMTk3i mF2Kbj5zT8CuOP69gs2lhu-oJtJ-ATxbL8KOYCPU qiniu
-    useTTY: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !CommandStep
-    name: 查看是否成功
-    runInContainer: true
-    image: qiniu_ubuntu
-    interpreter: !DefaultInterpreter
-      commands:
-      - qshell user ls >> log.txt
-      - cat log.txt
-    useTTY: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !CommandStep
-    name: 同步对象存储
-    runInContainer: true
-    image: qiniu_ubuntu
-    interpreter: !DefaultInterpreter
-      commands:
       - qshell qupload2 --bucket aboutme-txg --src-dir=/home
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
