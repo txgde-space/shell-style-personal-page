@@ -9,6 +9,16 @@ jobs:
     withLfs: false
     withSubmodules: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: test
+    runInContainer: true
+    image: qiniu_ubuntu
+    interpreter: !DefaultInterpreter
+      commands:
+      - ls /home
+      - ls ./
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !RunContainerStep
     name: 创建容器
     image: qiniu_ubuntu
