@@ -31,6 +31,7 @@ jobs:
   triggers:
   - !BranchUpdateTrigger
     branches: master
+    paths: -.onedev-buildspec.yml
     projects: shell-style-personal-page
   retryCondition: never
   maxRetries: 3
@@ -87,6 +88,7 @@ jobs:
   triggers:
   - !BranchUpdateTrigger
     branches: master
+    paths: -.onedev-buildspec.yml
     projects: shell-style-personal-page
   retryCondition: never
   maxRetries: 3
