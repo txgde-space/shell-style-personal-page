@@ -84,7 +84,6 @@ jobs:
     remoteUrl: https://github.com/txgde-space/shell-style-personal-page.git
     passwordSecret: '1'
     force: false
-    proxy: socks5://home.txg2333.top:7890
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger
