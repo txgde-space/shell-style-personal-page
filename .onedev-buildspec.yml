@@ -52,9 +52,11 @@ jobs:
     image: git
     interpreter: !DefaultInterpreter
       commands:
-      - git rm -r --cached .
+      - git config --global user.email @property:email@
+      - git config --global user.name @property:username@
+      - git rm .onedev-buildspec.yml
       - git commit -m 'update'
-      - git -c http.proxy=@property:proxy_url@ -c https.proxy=@property:proxy_url@ push --force https://txgde-space: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@@github.com/txgde-space/shell-style-personal-page.git
+      - git -c http.proxy=@property:proxy_url@ -c https.proxy=@property:proxy_url@ push --force https://txgde-space:@property:github_token@@@github.com/txgde-space/shell-style-personal-page.git
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
