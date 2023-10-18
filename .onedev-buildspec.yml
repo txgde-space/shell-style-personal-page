@@ -31,6 +31,7 @@ jobs:
   triggers:
   - !BranchUpdateTrigger
     branches: master
+    paths: -.onedev-buildspec.yml
     projects: shell-style-personal-page
   retryCondition: never
   maxRetries: 3
@@ -71,6 +72,26 @@ jobs:
       - ls /
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
+- name: 同步到 github
+  jobExecutor: docker
+  steps:
+  - !PushRepository
+    name: 同步到 github
+    remoteUrl: https://github.com/txgde-space/shell-style-personal-page.git
+    userName: txgde-space
+    passwordSecret: '1'
+    force: false
+    proxy: http://home.txg2333.top:7890
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger
+    branches: master
+    paths: -.onedev-buildspec.yml
+    projects: shell-style-personal-page
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
