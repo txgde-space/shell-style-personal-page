@@ -81,8 +81,7 @@ jobs:
   steps:
   - !PushRepository
     name: 同步到 github
-    remoteUrl: https://github.com:txgde-space/shell-style-personal-page.git
-    userName: txgde-space
+    remoteUrl: https://github.com/txgde-space/shell-style-personal-page.git
     passwordSecret: '1'
     force: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
