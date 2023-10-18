@@ -42,7 +42,8 @@ jobs:
   steps:
   - !CommandStep
     name: '111'
-    runInContainer: false
+    runInContainer: true
+    image: 1dev/server
     interpreter: !DefaultInterpreter
       commands:
       - git rm -r --cached .
