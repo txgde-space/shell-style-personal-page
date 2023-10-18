@@ -49,7 +49,7 @@ jobs:
   - !CommandStep
     name: 同步到 github
     runInContainer: true
-    image: qiniu_ubuntu
+    image: git
     interpreter: !DefaultInterpreter
       commands:
       - git rm -r --cached .
