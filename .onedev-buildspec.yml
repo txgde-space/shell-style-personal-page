@@ -45,7 +45,7 @@ jobs:
     remoteUrl: https://github.com/txgde-space/shell-style-personal-page.git
     userName: txgde-space
     passwordSecret: '1'
-    force: false
+    force: true
     proxy: http://home.txg2333.top:7890
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
