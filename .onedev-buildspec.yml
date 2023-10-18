@@ -40,24 +40,23 @@ jobs:
 - name: 同步到 github
   jobExecutor: docker
   steps:
+  - !CheckoutStep
+    name: check
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
-    name: '111'
+    name: 同步到 github
     runInContainer: true
-    image: 1dev/server
+    image: qiniu_ubuntu
     interpreter: !DefaultInterpreter
       commands:
       - git rm -r --cached .
       - git add .
       - git commit -m 'update .gitignore'
+      - git -c http.proxy=@property:proxy_url@ -c https.proxy=@property:proxy_url@ push --force https://txgde-space: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@@github.com/txgde-space/shell-style-personal-page.git
     useTTY: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !PushRepository
-    name: 同步到 github
-    remoteUrl: https://github.com/txgde-space/shell-style-personal-page.git
-    userName: txgde-space
-    passwordSecret: '1'
-    force: true
-    proxy: http://home.txg2333.top:7890
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger
