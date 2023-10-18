@@ -24,7 +24,7 @@ jobs:
     interpreter: !DefaultInterpreter
       commands:
       - pwd
-      - qshell account jCqlDDtKrsCSck-4s5BEd6vQHtSCiF15G6lMTk3i mF2Kbj5zT8CuOP69gs2lhu-oJtJ-ATxbL8KOYCPU qiniu
+      - qshell account @property:qiniu_ac@ @property:qiniu_ak@ qiniu
       - qshell qupload2 --bucket aboutme-txg --src-dir=./ --skip-file-prefixes=.gitignore,.onedev-buildspec.yml --skip-path-prefixes=.git  --overwrite
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
@@ -33,45 +33,6 @@ jobs:
     branches: master
     paths: -.onedev-buildspec.yml
     projects: shell-style-personal-page
-  retryCondition: never
-  maxRetries: 3
-  retryDelay: 30
-  timeout: 3600
-- name: test
-  jobExecutor: docker
-  steps:
-  - !CheckoutStep
-    name: check
-    cloneCredential: !DefaultCredential {}
-    withLfs: false
-    withSubmodules: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !RunContainerStep
-    name: qiniu_docker
-    image: qiniu_ubuntu
-    volumeMounts:
-    - sourcePath: '@project_name@'
-      targetPath: /home
-    useTTY: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !CommandStep
-    name: test
-    runInContainer: true
-    image: qiniu_ubuntu
-    interpreter: !DefaultInterpreter
-      commands:
-      - ls -hl ./
-    useTTY: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !CommandStep
-    name: test
-    runInContainer: true
-    image: qiniu_ubuntu
-    interpreter: !DefaultInterpreter
-      commands:
-      - ls /
-    useTTY: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
@@ -85,7 +46,6 @@ jobs:
     userName: txgde-space
     passwordSecret: '1'
     force: false
-    proxy: http://home.txg2333.top:7890
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger
