@@ -46,6 +46,7 @@ jobs:
     userName: txgde-space
     passwordSecret: '1'
     force: true
+    proxy: '@proxy_url@'
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger
