@@ -40,14 +40,6 @@ jobs:
 - name: 同步到 github
   jobExecutor: docker
   steps:
-  - !PushRepository
-    name: 同步到 github
-    remoteUrl: https://github.com/txgde-space/shell-style-personal-page.git
-    userName: txgde-space
-    passwordSecret: '1'
-    force: true
-    proxy: http://home.txg2333.top:7890
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
     name: '111'
     runInContainer: false
@@ -57,6 +49,14 @@ jobs:
       - git add .
       - git commit -m 'update .gitignore'
     useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PushRepository
+    name: 同步到 github
+    remoteUrl: https://github.com/txgde-space/shell-style-personal-page.git
+    userName: txgde-space
+    passwordSecret: '1'
+    force: true
+    proxy: http://home.txg2333.top:7890
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger
