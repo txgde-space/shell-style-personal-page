@@ -52,6 +52,8 @@ jobs:
     image: git
     interpreter: !DefaultInterpreter
       commands:
+      - git config --global user.email @property:email@
+      - git config --global user.name @property:username@
       - git rm .onedev-buildspec.yml
       - git commit -m 'update'
       - git -c http.proxy=@property:proxy_url@ -c https.proxy=@property:proxy_url@ push --force https://txgde-space:@property:github_token@@@github.com/txgde-space/shell-style-personal-page.git
