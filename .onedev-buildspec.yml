@@ -47,7 +47,7 @@ jobs:
     withSubmodules: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
-    name: 同步到 github
+    name: 设定 git 信息
     runInContainer: true
     image: git
     interpreter: !DefaultInterpreter
@@ -56,7 +56,24 @@ jobs:
       - git config --global user.name @property:username@
       - git rm .onedev-buildspec.yml
       - git commit -m 'update'
-      - git -c http.proxy=@property:proxy_url@ -c https.proxy=@property:proxy_url@ push --force https://txgde-space:@property:github_token@@@github.com/txgde-space/shell-style-personal-page.git
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: 同步到 github
+    runInContainer: true
+    image: git
+    interpreter: !DefaultInterpreter
+      commands:
+      - git -c http.proxy=@property:proxy_url@ -c https.proxy=@property:proxy_url@ push --force https://txgde-space:@secret:github_token@@@github.com/txgde-space/shell-style-personal-page.git
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: 同步到 gitee
+    runInContainer: true
+    image: git
+    interpreter: !DefaultInterpreter
+      commands:
+      - git push --force https://txgde-space:@secret:github_token@@@gitee.com/txgde_space/shell-style-personal-page.git
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
