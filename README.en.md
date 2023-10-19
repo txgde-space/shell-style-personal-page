@@ -5,3 +5,6 @@ A personal page with a shell-style design.
 
 #### Software Architecture
 Pure HTML+CSS+JS trio.
+
+#### Interface Example
+![Interface Example](example.png)
