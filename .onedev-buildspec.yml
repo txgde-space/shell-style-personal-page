@@ -73,7 +73,7 @@ jobs:
     image: git
     interpreter: !DefaultInterpreter
       commands:
-      - git push --force https://txgde-space:@secret:gitee_secret@@@gitee.com/txgde_space/shell-style-personal-page.git
+      - git push --force https://txgde_space:@secret:gitee_secret@@@gitee.com/txgde_space/shell-style-personal-page.git
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
