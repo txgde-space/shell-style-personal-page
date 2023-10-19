@@ -37,7 +37,7 @@ jobs:
   maxRetries: 3
   retryDelay: 30
   timeout: 3600
-- name: 同步到 github
+- name: 同步到在线git 仓库
   jobExecutor: docker
   steps:
   - !CheckoutStep
@@ -73,7 +73,7 @@ jobs:
     image: git
     interpreter: !DefaultInterpreter
       commands:
-      - git push --force https://txgde-space:@secret:github_token@@@gitee.com/txgde_space/shell-style-personal-page.git
+      - git push --force https://txgde-space:@secret:gitee_secret@@@gitee.com/txgde_space/shell-style-personal-page.git
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
